@@ -592,7 +592,8 @@ func TestMarshalInlineField_StructExtra(t *testing.T) {
 	}
 	var b strings.Builder
 	marshalInlineField(&b, "k", reflect.ValueOf(Inner{A: "x"}), 1)
-	if !strings.Contains(b.String(), "k:\n  a: x") {
+	// When indent=1, marshalStruct is called with indent+1=2, so child fields get 4 spaces
+	if !strings.Contains(b.String(), "k:\n    a: x") {
 		t.Errorf("unexpected output: %q", b.String())
 	}
 }
